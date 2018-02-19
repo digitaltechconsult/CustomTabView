@@ -18,6 +18,10 @@ struct VDFSegmentedControlStyle {
     public var selectedThicknessPercentage: CGFloat = 0.04
 }
 
+// MARK: - VDFSegmentedControlProtocol
+@objc protocol VDFSegmentedControlProtocol {
+    @objc optional func segmentedControlValueChanged(_ sender:VDFSegmentedControl);
+}
 
 // MARK: - VDFSegmentedControl UI
 class VDFSegmentedControl: UISegmentedControl {
@@ -36,6 +40,7 @@ class VDFSegmentedControl: UISegmentedControl {
     private var _style: VDFSegmentedControlStyle = VDFSegmentedControlStyle()
     private var defaultBorderView: UIView!
     private var selectedBorderViews: [UIView] = []
+    private let delegate: VDFSegmentedControlProtocol? = nil
     
     
     //MARK: Initialisers
@@ -71,6 +76,7 @@ class VDFSegmentedControl: UISegmentedControl {
             selectedBorderViews[i].isHidden = true
         }
         selectedBorderViews[selectedSegmentIndex].isHidden = false
+        delegate?.segmentedControlValueChanged?(sender)
     }
     
     //MARK: Private methods
